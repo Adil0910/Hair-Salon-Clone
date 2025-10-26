@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elegant Hair Salon - Interactive 3D</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+    
+}
+body{
+    overflow-x:
+    hidden;
+    color:#333;
+}
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* NAVBAR */
+nav{position:fixed;width:100%;top:0;left:0;display:flex;justify-content:space-between;padding:1rem 2rem;background:rgba(0,0,0,0.5);z-index:1000;}
+nav .logo{color:#fff;font-weight:700;font-size:1.5rem;}
+nav ul{list-style:none;display:flex;gap:2rem;}
+nav ul li a{color:#fff;font-weight:500;transition:0.3s;}
+nav ul li a:hover{color:#ffc107;}
+
+/* 3D CANVAS */
+canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;display:block;}
+
+/* PAGES */
+section.page {
+    min-height: 100vh;
+    display: flex;
+    background: transparent;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 rem;
+    position: relative;
+    max-width: 1259px;
+}
+.pageoo{
+    
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 rem;
+    position: relative;
+
+}
+
+/* HERO */
+.hero{color:#fff;background:#000;position:relative;}
+.hero img{width:100%;height:100%;object-fit:cover;opacity:0.7;position:absolute;top:0;left:0;z-index:1;}
+.hero-text{position:relative;z-index:2;}
+.hero-text h1{font-size:4rem;margin-bottom:1rem;text-shadow:2px 2px 12px rgba(0,0,0,0.7);}
+.hero-text p{font-size:1.5rem;text-shadow:1px 1px 8px rgba(0,0,0,0.6);}
+.hero-text button{margin-top:2rem;padding:0.8rem 2rem;font-size:1.1rem;background:#ffc107;border:none;border-radius:5px;cursor:pointer;transition:0.3s;}
+.hero-text button:hover{background:#e6b800;}
+
+/* VIDEO SECTION */
+.video-section video{width:100%;max-height:80vh;object-fit:cover;border-radius:10px;transition:transform 0.5s,opacity 0.5s;}
+
+/* CARD SECTION */
+.cards-container{display:flex;flex-wrap:wrap;justify-content:center;gap:2rem;margin-top:2rem;z-index:2;position:relative;}
+.card{background:#fff;box-shadow:0 8px 20px rgba(0,0,0,0.2);border-radius:12px;padding:2rem;width:250px;transition:transform 0.3s;transform-style:preserve-3d;cursor:pointer;}
+.card:hover{transform:rotateY(15deg) rotateX(10deg) translateY(-10px);}
+.card img{width:100%;border-radius:10px;margin-bottom:1rem;}
+.card h3{margin-bottom:0.5rem;color:#ff4081;}
+.card p{color:#555;font-size:0.95rem;}
+
+/* ABOUT */
+.about p{max-width:600px;margin-top:1rem;color:#555;}
+
+/* BOOK SLOT */
+.book-slot input,.book-slot textarea,.book-slot button{width:100%;max-width:400px;padding:0.8rem;margin:0.5rem 0;border-radius:6px;border:1px solid #ccc;font-size:1rem;}
+.book-slot button{background:#ff4081;color:#fff;border:none;cursor:pointer;transition:0.3s;}
+.book-slot button:hover{background:#e73370;}
+
+/* TESTIMONIALS */
+.testimonials{display:flex;flex-direction:column;gap:1.5rem;max-width:800px;margin-top:2rem;}
+.testimonial{background:#f8f8f8;padding:1.5rem;border-radius:10px;box-shadow:0 6px 15px rgba(0,0,0,0.1);}
+.testimonial p{font-style:italic;color:#333;}
+.testimonial h4{margin-top:1rem;color:#ff4081;}
+
+/* FOOTER */
+footer{background:#222;color:#fff;padding:2rem;text-align:center;}
+footer a{color:#ffc107;}
+
+
+
+@media (min-width:320px) and (max-width:460px){
+    nav .logo {
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.6rem;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 0.6rem;
+    font-size: 8px;
+}
+.hero-text h1 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 12px rgba(0,0,0,0.7);
+}
+.hero-text p {
+    font-size: 0.6rem;
+    text-shadow: 1px 1px 8px rgba(0,0,0,0.6);
+}
+.hero-text button {
+    margin-top: 2rem;
+    padding: 0.8rem 2rem;
+    font-size: 0.6rem;
+    background: #ffc107;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+h2 {
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+section.page {
+    min-height: 45vh;
+    display: flex;
+    background: transparent;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 rem;
+    position: relative;
+    max-width: 1259px;
+}
+.book-slot input, .book-slot textarea, .book-slot button {
+    width: 94%;
+    max-width: 400px;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+.card {
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    padding: 2rem;
+    width: 278px;
+    transition: transform 0.3s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+<div class="logo">Elegant Salon</div>
+<ul>
+<li><a href="#hero">Home</a></li>
+<li><a href="#video">Video</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#book">Book</a></li>
+<li><a href="#reviews">Reviews</a></li>
+</ul>
+</nav>
+
+<!-- 3D CANVAS -->
+<canvas id="bg"></canvas>
+
+<!-- HERO -->
+<section class="hero pageoo" id="hero">
+<img src="img/handsome-man-cutting-beard-barber-shop-salon.jpg" alt="Hair Salon">
+<div class="hero-text">
+<h1>Welcome to Elegant Hair Salon</h1>
+<p>Luxury styling & professional care</p>
+<button>Book Your Slot</button>
+</div>
+</section>
+
+<!-- VIDEO -->
+<section class="page video-section" id="video">
+<h2 style="margin-bottom: 15px;">Watch Our Salon in Action</h2>
+<video src="img/vid1.mp4" muted autoplay loop playsinline></video>
+</section>
+
+<!-- SERVICES CARDS -->
+<section class="page" id="services">
+<h2>Our Services</h2>
+<div class="cards-container">
+<div class="card"><img src="img/hairdresser-barber-shop-styling-hair-client.jpg"><h3>Haircuts</h3><p>Precision haircuts tailored to your style.</p></div>
+<div class="card"><img src="img/pexels-zvolskiy-1570807.jpg"><h3>Styling</h3><p>Professional styling for every occasion.</p></div>
+<div class="card"><img src="img/side-view-woman-hair-salon.jpg"><h3>Coloring</h3><p>Premium coloring services with lasting results.</p></div>
+</div>
+</section>
+
+<!-- ABOUT (FIXED) -->
+<section class="page about" id="about">
+<h2>About Our Salon</h2>
+<p>Elegant Hair Salon brings the best hair care experience in town with skilled professionals and premium products. Our mission is to make you feel confident and stylish.</p>
+</section>
+
+<!-- BOOK SLOT -->
+<section class="page book-slot" id="book">
+<h2>Book Your Appointment</h2>
+<input type="text" placeholder="Your Name">
+<input type="email" placeholder="Email">
+<input type="date" placeholder="Select Date">
+<textarea placeholder="Any Special Requests"></textarea>
+<button>Book Now</button>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="page testimonials" id="reviews">
+<h2>What Our Customers Say</h2>
+<div class="testimonial"><p>"Best salon experience ever! Highly recommend Elegant Hair Salon."</p><h4>- Mohd Saad</h4></div>
+<div class="testimonial"><p>"Professional staff and amazing styling. Love my new haircut!"</p><h4>- Addy</h4></div>
+<div class="testimonial"><p>"Luxurious experience, very satisfied with coloring and styling."</p><h4>- Imran Ahmad</h4></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<p>&copy; 2025 Elegant Hair Salon | Follow us on <a href="#">Instagram</a>, <a href="#">Facebook</a>, <a href="#">Twitter</a></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+// THREE.JS SETUP
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+const renderer = new THREE.WebGLRenderer({canvas:document.querySelector('#bg'),antialias:true,alpha:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+camera.position.z = 5;
+
+// Hero cube
+const geometry = new THREE.BoxGeometry(1.5,1.5,1.5);
+const material = new THREE.MeshStandardMaterial({color:0xff4081,transparent:true,opacity:0.7});
+const cube = new THREE.Mesh(geometry,material);
+scene.add(cube);
+
+// About torus
+const geometry2 = new THREE.TorusGeometry(1,0.4,16,100);
+const material2 = new THREE.MeshStandardMaterial({color:0x00bfff,transparent:true,opacity:0.6});
+const torus = new THREE.Mesh(geometry2,material2);
+torus.position.set(0,0,-5);
+scene.add(torus);
+
+// Lights
+const light1 = new THREE.PointLight(0xffffff,1);
+light1.position.set(5,5,5); scene.add(light1);
+const light2 = new THREE.AmbientLight(0xffffff,0.5); scene.add(light2);
+
+// Animate
+function animate(){
+requestAnimationFrame(animate);
+cube.rotation.x += 0.01;
+cube.rotation.y += 0.01;
+torus.rotation.x += 0.005;
+torus.rotation.y += 0.005;
+renderer.render(scene,camera);
+}
+animate();
+
+// GSAP Scroll
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero scroll
+gsap.timeline({
+scrollTrigger:{
+trigger:"#hero",start:"top top",end:"bottom top",scrub:true
+}})
+.to(cube.rotation,{x:Math.PI*2,y:Math.PI*2})
+.to(camera.position,{z:3},"<");
+
+// About scroll pin + rotation
+gsap.timeline({
+scrollTrigger:{
+trigger:"#about",start:"top top",end:"bottom top",scrub:true,pin:true
+}})
+.to(torus.rotation,{x:Math.PI*2,y:Math.PI*2});
+
+// Video scroll interaction
+const video = document.querySelector(".video-section video");
+gsap.to(video,{
+  scrollTrigger:{
+    trigger:".video-section",
+    start:"top 80%",
+    end:"bottom 20%",
+    scrub:true
+  },
+  scale:1.05,
+  opacity:0.9
+});
+
+// Resize
+window.addEventListener('resize',()=>{
+camera.aspect = window.innerWidth/window.innerHeight;
+camera.updateProjectionMatrix();
+renderer.setSize(window.innerWidth,window.innerHeight);
+});
+</script>
+
+</body>
+</html>
